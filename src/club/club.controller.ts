@@ -26,8 +26,8 @@ export class ClubController {
   }
 
   @Get(':clubId')
-  async findOne(@Param('clubId') museumId: string) {
-    return await this.clubService.findOne(museumId);
+  async findOne(@Param('clubId') clubId: string) {
+    return await this.clubService.findOne(clubId);
   }
 
   @Post()
@@ -37,12 +37,12 @@ export class ClubController {
   }
 
   @Put(':clubId')
-  async update(@Param('clubId') clubId: string, @Body() museumDto: ClubDto) {
-    const club: ClubEntity = plainToInstance(ClubEntity, museumDto);
+  async update(@Param('clubId') clubId: string, @Body() clubDto: ClubDto) {
+    const club: ClubEntity = plainToInstance(ClubEntity, clubDto);
     return await this.clubService.update(clubId, club);
   }
 
-  @Delete(':museumId')
+  @Delete(':clubId')
   @HttpCode(204)
   async delete(@Param('clubId') clubId: string) {
     return await this.clubService.delete(clubId);

@@ -139,7 +139,7 @@ describe('ClubMemberService', () => {
     );
   });
 
-  it('findMembersFromClub should return associate members of a museum', async () => {
+  it('findMembersFromClub should return associate members of a club', async () => {
     const clubMembers: MemberEntity[] = await service.findMembersFromClub(
       mockClub.id,
     );
