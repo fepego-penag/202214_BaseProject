@@ -3,7 +3,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { MemberModule } from './member/member.module';
 import { ClubModule } from './club/club.module';
-import { ClubSocioModule } from './club-socio/club-socio.module';
+import { ClubMemberModule } from './club-member/club-member.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { MemberEntity } from './member/member.entity';
 import { ClubEntity } from './club/club.entity';
@@ -12,7 +12,7 @@ import { ClubEntity } from './club/club.entity';
   imports: [
     MemberModule,
     ClubModule,
-    ClubSocioModule,
+    ClubMemberModule,
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: 'localhost',
