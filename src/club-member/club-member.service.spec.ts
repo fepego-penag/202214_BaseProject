@@ -114,16 +114,6 @@ describe('ClubMemberService', () => {
     ).rejects.toHaveProperty('message', 'Member not found');
   });
 
-  it('findMemberFromClub should return an error when member dont exists', async () => {
-    const memberDB: MemberEntity = await service.findMemberFromClub(
-      mockClub.id,
-      '0',
-    );
-    await expect(() =>
-      service.findMemberFromClub('0', memberDB.id),
-    ).rejects.toHaveProperty('message', 'Club not found');
-  });
-
   it('findMemberFromClub should return an error when member dont belong to club', async () => {
     const member: MemberEntity = await memberRepository.save({
       userName: faker.name.fullName(),
