@@ -22,6 +22,16 @@
   <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
   [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
+## Inicializacion de pruebas Postman
+para ejecutar las pruebas de forma correcta y que todas las pruebas pasen debe realizarse el siguiente proceso:
+1. ejecutar las pruebas en serie de club, estas NO necesitan ninguna variable adicional o global.
+2. ejecutar las pruebas de member, se debe setear en una variable global un club con el nombre club_id. Con esto las pruebas corren en conjunto sin intervencion en conjunto.
+3. ejecutar las pruebas club-member, para esta se debe realizar una configuración previa:
+    * agregar una variable global con el id del club bajo el nombre club_id
+    * agregar una variable global con un usuario bajo el nombre member_id
+    * agregar una variable global con nuevo member bajo el nombre new_member
+    * agregar una variable global con nuevo member bajo el nombre no_member_club
+
 ## Description
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
