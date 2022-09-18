@@ -1,0 +1,381 @@
+{
+	"info": {
+		"_postman_id": "2ae170fb-0761-497f-aa72-7d24b026d6dd",
+		"name": "club",
+		"description": "Buy or rent spacecrafts",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "1589290"
+	},
+	"item": [
+		{
+			"name": "AddClub",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {",
+							"   pm.response.to.have.status(201);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"my first club\",\n    \"startBusinessDate\": \"2020-01-01\",\n    \"presentationImage\": \"https://gastronomiaycia.republica.com/2021/12/11/lista-de-los-50-mejores-bares-del-mundo-2021/\",\n    \"description\": \"this is a valid description\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/club",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"club"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AddClub-nonValidDescriptionLength",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 412\", function () {",
+							"   pm.response.to.have.status(412);",
+							"});",
+							"",
+							"pm.test(\"Get expected error message\", function () {",
+							"   var data = pm.response.json();",
+							"   pm.expect(data.message).to.eql(\"description is to long\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"my first club\",\n    \"startBusinessDate\": \"2020-01-01\",\n    \"presentationImage\": \"https://gastronomiaycia.republica.com/2021/12/11/lista-de-los-50-mejores-bares-del-mundo-2021/\",\n    \"description\": \"Lorem ipsum dolor sit amet consectetur adipiscing elit ultricies cras sapien etiam, parturient congue conubia mus duis habitasse ad lobortis potenti. Eleifend nullam est potenti magnis pretium aenean nulla metus, at faucibus curabitur lacinia aliquam consequat varius parturient, lacus facilisis proin commodo imperdiet viverra leo. Rutrum faucibus id eget nostra inceptos ad commodo sem tempor, ullamcorper eros suspendisse augue leo diam himenaeos.\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/club",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"club"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getAllClubs",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/club",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"club"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getClubById",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"   pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/club/{{club_id}}/",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"club",
+						"{{club_id}}",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getClubById-noValidClub",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"   pm.response.to.have.status(404);",
+							"});",
+							"",
+							"pm.test(\"Get expected error message\", function () {",
+							"   var data = pm.response.json();",
+							"   pm.expect(data.message).to.eql(\"Club not found\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/club/{{no_valid_club}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"club",
+						"{{no_valid_club}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "updateClub",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": \"{{club_id}}\",\n    \"name\": \"my first club modified\",\n    \"startBusinessDate\": \"2020-01-01\",\n    \"presentationImage\": \"https://gastronomiaycia.republica.com/2021/12/11/lista-de-los-50-mejores-bares-del-mundo-2021/\",\n    \"description\": \"this is a valid description\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/club/{{club_id}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"club",
+						"{{club_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "updateClub-noValidId",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"   pm.response.to.have.status(404);",
+							"});",
+							"",
+							"pm.test(\"Get expected error message\", function () {",
+							"   var data = pm.response.json();",
+							"   pm.expect(data.message).to.eql(\"Club not found\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": \"{{club_id}}\",\n    \"name\": \"my first club modified\",\n    \"startBusinessDate\": \"2020-01-01\",\n    \"presentationImage\": \"https://gastronomiaycia.republica.com/2021/12/11/lista-de-los-50-mejores-bares-del-mundo-2021/\",\n    \"description\": \"this is a valid description\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/club/{{no_valid_club}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"club",
+						"{{no_valid_club}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteClub",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 204\", function () {",
+							"   pm.response.to.have.status(204);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/club/{{club_id}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"club",
+						"{{club_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteClub-noValidClubId",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"   pm.response.to.have.status(404);",
+							"});",
+							"",
+							"pm.test(\"Get expected error message\", function () {",
+							"   var data = pm.response.json();",
+							"   pm.expect(data.message).to.eql(\"Club not found\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/club/{{no_valid_club}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"club",
+						"{{no_valid_club}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "apikey",
+		"apikey": [
+			{
+				"key": "key",
+				"value": "X-Api-Key",
+				"type": "string"
+			},
+			{
+				"key": "value",
+				"value": "<API Key>",
+				"type": "string"
+			},
+			{
+				"key": "in",
+				"value": "header",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "localhost:3000/api/v1",
+			"type": "string"
+		},
+		{
+			"key": "club_id",
+			"value": "447a85ee-6036-42ff-9f42-b9f4c91d561b",
+			"type": "string",
+			"disabled": true
+		},
+		{
+			"key": "no_valid_club",
+			"value": "2453b8f9-cb5a-4798-89ba-59662ff78984",
+			"type": "string"
+		}
+	]
+}

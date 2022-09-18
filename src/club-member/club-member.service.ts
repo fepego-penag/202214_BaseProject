@@ -21,6 +21,7 @@ export class ClubMemberService {
   async addMemberToClub(clubId: string, memberId: string): Promise<ClubEntity> {
     const member: MemberEntity = await this.memberRepository.findOne({
       where: { id: memberId },
+      relations: ['clubs'],
     });
     this.checkIfMemberExists(member);
 

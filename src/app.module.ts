@@ -16,7 +16,7 @@ import { ClubEntity } from './club/club.entity';
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: 'localhost',
-      port: 5432,
+      port: 55000,
       username: 'postgres',
       password: 'postgrespw',
       database: 'parcial',
