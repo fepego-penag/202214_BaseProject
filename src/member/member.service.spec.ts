@@ -5,7 +5,6 @@ import { MemberEntity } from './member.entity';
 import { TypeOrmTestingConfig } from '../shared/testing-utils/typeorm-testing-config';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { faker } from '@faker-js/faker';
-import mock = jest.mock;
 
 describe('MemberService', () => {
   let service: MemberService;
@@ -13,7 +12,7 @@ describe('MemberService', () => {
   let mockMemberList: MemberEntity[];
 
   const seedDatabase = async () => {
-    memberRepository.clear();
+    await memberRepository.clear();
     mockMemberList = [];
     for (let i = 0; i < 5; i++) {
       const member: MemberEntity = await memberRepository.save({
@@ -32,7 +31,7 @@ describe('MemberService', () => {
     }).compile();
 
     service = module.get<MemberService>(MemberService);
-    memberRepository = module.get<Repository<MemberEntity>>(
+    memberRepository = await module.get<Repository<MemberEntity>>(
       getRepositoryToken(MemberEntity),
     );
 
@@ -66,16 +65,12 @@ describe('MemberService', () => {
   });
 
   it('create should return a new Member', async () => {
-    const newMockMember: {
-      id: string;
-      userName: string;
-      dateBirth: Date;
-      email: string;
-    } = {
+    const newMockMember: MemberEntity = {
       id: '',
       userName: faker.name.fullName(),
       email: faker.internet.email(),
       dateBirth: faker.date.past(),
+      clubs: [],
     };
     const newMember: MemberEntity = await service.create(newMockMember);
     expect(newMember).not.toBeNull();
@@ -90,16 +85,12 @@ describe('MemberService', () => {
   });
 
   it('create should return error caused by wrong email format', async () => {
-    const newMockMember: {
-      id: string;
-      userName: string;
-      dateBirth: Date;
-      email: string;
-    } = {
+    const newMockMember: MemberEntity = {
       id: '',
       userName: faker.name.fullName(),
       email: 'nonValidEmail.com',
       dateBirth: faker.date.past(),
+      clubs: [],
     };
 
     await expect(() => service.create(newMockMember)).rejects.toHaveProperty(

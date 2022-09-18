@@ -34,7 +34,7 @@ export class MemberService {
     return member;
   }
 
-  async create(member: { id: string; userName: string; dateBirth: Date; email: string }): Promise<MemberEntity> {
+  async create(member: MemberEntity): Promise<MemberEntity> {
     if (!this.emailValidation(member.email)) {
       throw new BusinessLogicException(
         'Email is not valid',

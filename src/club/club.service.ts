@@ -35,10 +35,12 @@ export class ClubService {
   }
 
   async create(club: ClubEntity): Promise<ClubEntity> {
+    this.checkImageAndDescriptionLength(club);
     return await this.clubRepository.save(club);
   }
 
   async update(id: string, club: ClubEntity): Promise<ClubEntity> {
+    this.checkImageAndDescriptionLength(club);
     const clubDb: ClubEntity = await this.clubRepository.findOne({
       where: { id },
     });
@@ -62,5 +64,23 @@ export class ClubService {
       );
 
     await this.clubRepository.remove(club);
+  }
+
+  private checkImageAndDescriptionLength(club: ClubEntity) {
+    if (!this.isvalidStringLength(club.presentationImage)) {
+      throw new BusinessLogicException(
+        'Presentation image is to long',
+        BusinessError.PRECONDITION_FAILED,
+      );
+    }
+    if (!this.isvalidStringLength(club.description)) {
+      throw new BusinessLogicException(
+        'description is to long',
+        BusinessError.PRECONDITION_FAILED,
+      );
+    }
+  }
+  private isvalidStringLength(field: string): boolean {
+    return field.length <= 100;
   }
 }
