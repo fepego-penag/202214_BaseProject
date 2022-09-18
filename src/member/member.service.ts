@@ -10,7 +10,7 @@ import {
 @Injectable()
 export class MemberService {
   constructor(
-    @InjectRepository(MemberService)
+    @InjectRepository(MemberEntity)
     private readonly memberRepository: Repository<MemberEntity>,
   ) {}
 
@@ -34,7 +34,7 @@ export class MemberService {
     return member;
   }
 
-  async create(member: MemberEntity): Promise<MemberEntity> {
+  async create(member: { id: string; userName: string; dateBirth: Date; email: string }): Promise<MemberEntity> {
     if (!this.emailValidation(member.email)) {
       throw new BusinessLogicException(
         'Email is not valid',
